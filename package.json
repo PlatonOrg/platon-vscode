@@ -1,0 +1,161 @@
+{
+  "name": "platon-vscode",
+  "displayName": "PLaTOn Extension",
+  "description": "A VSCode extension to modify platon resources directly in VSCode.",
+  "publisher": "platon",
+  "icon": "icons/extension-icon.png",
+  "pricing": "Free",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PlatonOrg/platon-vscode"
+  },
+  "license": "CECILL-B",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.97.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onUri"
+  ],
+  "main": "./dist/extension.js",
+  "l10n": "./l10n",
+  "contributes": {
+    "localizations": [
+      {
+        "languageId": "fr",
+        "path": "./package.nls.fr.json",
+        "translations": []
+      },
+      {
+        "languageId": "en",
+        "path": "./package.nls.json",
+        "translations": []
+      }
+      
+    ],
+    "commands": [
+      {
+        "command": "platon.sync",
+        "category": "PLaTOn",
+        "title": "%command.platon.sync.title%",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "platon.openRessource",
+        "category": "PLaTOn",
+        "title": "%command.platon.openRessource.title%",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "platon.preview",
+        "category": "PLaTOn",
+        "title": "%command.platon.preview.title%",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "platon.connect",
+        "category": "PLaTOn",
+        "title": "%command.platon.connect.title%",
+        "icon": "$(plug)"
+      }
+    ],
+    "uriHandlers": [
+      {
+        "scheme": "vscode",
+        "authority": "platon",
+        "handler": "platon.handleUri"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourcePath =~ /.*platon.platon-vscode\\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\/.*\\.(ple|pla|plc|plo)/",
+          "command": "platon.preview",
+          "group": "navigation"
+        },
+        {
+          "when": "resourcePath =~ /.*platon.platon-vscode\\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\/.*\\.(ple|pla|plc|plo)/",
+          "command": "platon.sync",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "when": "resourcePath =~ /.*platon.platon-vscode\\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\\/.*\\.(ple|pla|plc|plo)/",
+          "command": "platon.preview",
+          "group": "navigation",
+          "title": "Preview"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "platon.sync",
+          "when": "explorerResourceIsRoot && resourcePath =~ /.*platon.platon-vscode\\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}.*/",
+          "group": "1_platon_command"
+        }
+      ]
+    },
+    "languages": [
+      {
+        "id": "ple",
+        "aliases": ["PLaTon Language", "ple"],
+        "extensions": [".ple"],
+        "icon": {
+          "dark": "./icons/preview-icon.svg",
+          "light": "./icons/preview-icon.svg"
+        },
+        "configuration": "./syntaxes/ple-language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ple",
+        "scopeName": "source.ple",
+        "path": "./syntaxes/ple.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "properties": {
+        "platon.baseUrl": {
+          "type": "string",
+          "default": "https://platon-preprod.univ-eiffel.fr/",
+          "description": "URL du site platon."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "yarn run check-types && yarn run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "yarn run check-types && yarn run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.97.0",
+    "@typescript-eslint/eslint-plugin": "^8.22.0",
+    "@typescript-eslint/parser": "^8.22.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.24.2",
+    "eslint": "^9.19.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "axios": "^1.8.1",
+    "jwt-decode": "^4.0.0"
+  }
+}

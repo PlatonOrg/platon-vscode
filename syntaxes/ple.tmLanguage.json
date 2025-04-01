@@ -1,0 +1,112 @@
+{
+    "scopeName": "source.ple",
+    "fileTypes": [
+        ".ple"
+    ],
+    "repository": {},
+    "name": "PLaTon Exercise Language",
+    "patterns": [
+        {
+            "begin": "(?:^(title|form|hint|theories|statement|grader|builder|solution|sandbox)|^(\\w+))\\s*==\\s*(#!lang=js)\\s*",
+            "end": "==",
+            "name": "meta.embedded.block.javascript",
+            "captures": {
+                "1": {
+                    "name": "variable.language.reserved.ple"
+                },
+                "2": {
+                    "name": "variable.other.ple"
+                },
+                "3": {
+                    "name": "comment.line.number-sign.ple"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "source.js"
+                },
+                {
+                    "name": "variable.language.reserved.ple",
+                    "match": "\\b(title|form|hint|theories|statement|grader|builder|solution|sandbox)\\b"
+                }
+            ]
+        },
+        {
+            "begin": "(?:^(title|form|hint|theories|statement|grader|builder|solution|sandbox)|^(\\w+))\\s*==\\s*(#!lang=py)\\s*",
+            "end": "==",
+            "name": "meta.embedded.block.python",
+            "captures": {
+                "1": {
+                    "name": "variable.language.reserved.ple"
+                },
+                "2": {
+                    "name": "variable.other.ple"
+                },
+                "3": {
+                    "name": "comment.line.number-sign.ple"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "source.python"
+                },
+                {
+                    "name": "variable.language.reserved.ple",
+                    "match": "\\b(title|form|hint|theories|statement|grader|builder|solution|sandbox)\\b"
+                }
+            ]
+        },
+        {
+            "name": "comment.line.double-slash.ple",
+            "match": "//.*$"
+        },
+        {
+            "name": "comment.line.number-sign.ple",
+            "match": "#.*$"
+        },
+        {
+            "name": "comment.block.ple",
+            "begin": "/\\*",
+            "end": "\\*/"
+        },
+        {
+            "name": "constant.language.ple",
+            "match": "\\b(true|false|True|False)\\b"
+        },
+        {
+            "name": "keyword.operator.ple",
+            "match": "\\b=\\b"
+        },
+        {
+            "name": "string.quoted.double.ple",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.ple",
+                    "match": "\\\\."
+                }
+            ]
+        },
+        {
+            "name": "constant.numeric.ple",
+            "match": "\\b\\d+((\\.|_)\\d+)*\\b"
+        },
+        {
+            "name": "variable.language.reserved.ple",
+            "match": "\\b(title|form|hint|theories|statement|grader|builder|solution|sandbox)\\b"
+        },
+        {
+            "match": "@(copycontent|copyurl|include|extends)\\b",
+            "name": "support.function.ple"
+        },
+        {
+            "match": ":(wc+)(-\\w+)+",
+            "name": "support.type.ple"
+        },
+        {
+            "name": "variable.other.ple",
+            "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\b"
+        }
+    ]
+}
