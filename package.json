@@ -121,7 +121,7 @@
       "properties": {
         "platon.baseUrl": {
           "type": "string",
-          "default": "https://platon-preprod.univ-eiffel.fr/",
+          "default": "https://platon.univ-eiffel.fr/",
           "description": "URL du site platon."
         }
       }
